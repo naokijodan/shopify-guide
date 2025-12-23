@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eBay × Shopify 展開戦略ガイド - 規約と活用パターン</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif;
+            line-height: 1.8;
+            color: #333;
+            background: #f5f5f5;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* ヘッダー */
+        header {
+            background: linear-gradient(135deg, #0064d2 0%, #004a99 50%, #003366 100%);
+            color: white;
+            padding: 50px 20px;
+            text-align: center;
+            border-radius: 0 0 30px 30px;
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            font-size: 2em;
+            margin-bottom: 15px;
+        }
+
+        header .subtitle {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        header .badge {
+            display: inline-block;
+            background: #e53935;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            margin-top: 15px;
+        }
+
+        /* 目次 */
+        .toc {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .toc h2 {
+            color: #0064d2;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .toc ol {
+            margin-left: 25px;
+        }
+
+        .toc li {
+            padding: 8px 0;
+        }
+
+        .toc a {
+            color: #003366;
+            text-decoration: none;
+        }
+
+        .toc a:hover {
+            text-decoration: underline;
+        }
+
+        /* セクション */
+        .section {
+            background: white;
+            padding: 35px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .section h2 {
+            color: #0064d2;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #e53935;
+        }
+
+        .section h3 {
+            color: #003366;
+            font-size: 1.2em;
+            margin: 25px 0 15px 0;
+        }
+
+        /* 危険ボックス */
+        .danger-box {
+            background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #e53935;
+            margin: 20px 0;
+        }
+
+        .danger-box h4 {
+            color: #c62828;
+            margin-bottom: 10px;
+        }
+
+        /* 警告ボックス */
+        .warning-box {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #ff9800;
+            margin: 20px 0;
+        }
+
+        .warning-box h4 {
+            color: #e65100;
+            margin-bottom: 10px;
+        }
+
+        /* ポイントボックス */
+        .point-box {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #2196f3;
+            margin: 20px 0;
+        }
+
+        .point-box h4 {
+            color: #1565c0;
+            margin-bottom: 10px;
+        }
+
+        /* 成功ボックス */
+        .success-box {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #4caf50;
+            margin: 20px 0;
+        }
+
+        .success-box h4 {
+            color: #2e7d32;
+            margin-bottom: 10px;
+        }
+
+        /* テーブル */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th {
+            background: #0064d2;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+        }
+
+        tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        /* リスクラベル */
+        .risk-high {
+            background: #e53935;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+
+        .risk-mid {
+            background: #ff9800;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+
+        .risk-low {
+            background: #4caf50;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+
+        /* パターンカード */
+        .pattern-card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            border: 2px solid #eee;
+        }
+
+        .pattern-card.recommended {
+            border-color: #4caf50;
+            background: #f1f8e9;
+        }
+
+        .pattern-card h4 {
+            color: #0064d2;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .pattern-card .tag {
+            background: #0064d2;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.7em;
+        }
+
+        .pattern-card .tag.best {
+            background: #4caf50;
+        }
+
+        /* フロー図 */
+        .flow-diagram {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 25px 0;
+            color: white;
+        }
+
+        .flow-diagram h3 {
+            color: white;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .flow-boxes {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .flow-box {
+            background: rgba(255,255,255,0.95);
+            color: #333;
+            padding: 15px 25px;
+            border-radius: 10px;
+            text-align: center;
+            min-width: 120px;
+            font-weight: bold;
+        }
+
+        .flow-box.highlight {
+            background: #e53935;
+            color: white;
+        }
+
+        .flow-box small {
+            display: block;
+            font-weight: normal;
+            font-size: 0.8em;
+            margin-top: 5px;
+            opacity: 0.8;
+        }
+
+        .flow-arrow {
+            font-size: 1.5em;
+            color: white;
+        }
+
+        /* 引用 */
+        blockquote {
+            background: #f5f5f5;
+            border-left: 4px solid #0064d2;
+            padding: 15px 20px;
+            margin: 20px 0;
+            font-style: italic;
+        }
+
+        blockquote cite {
+            display: block;
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        /* チェックリスト */
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+
+        .checklist li {
+            padding: 10px 0 10px 35px;
+            position: relative;
+            border-bottom: 1px solid #eee;
+        }
+
+        .checklist li::before {
+            content: "☐";
+            position: absolute;
+            left: 0;
+            font-size: 1.2em;
+            color: #0064d2;
+        }
+
+        /* 比較表 */
+        .comparison-table th {
+            text-align: center;
+        }
+
+        .comparison-table td {
+            text-align: center;
+        }
+
+        .comparison-table td:first-child {
+            text-align: left;
+            font-weight: bold;
+        }
+
+        /* リンクボタン */
+        .link-button {
+            display: inline-block;
+            background: #0064d2;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 25px;
+            text-decoration: none;
+            margin: 10px 5px 10px 0;
+            transition: all 0.3s;
+        }
+
+        .link-button:hover {
+            background: #004a99;
+            transform: translateY(-2px);
+        }
+
+        /* フッター */
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        footer a {
+            color: #0064d2;
+        }
+
+        /* レスポンシブ */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.5em;
+            }
+
+            .section {
+                padding: 20px;
+            }
+
+            .flow-boxes {
+                flex-direction: column;
+            }
+
+            .flow-arrow {
+                transform: rotate(90deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>eBay × Shopify<br>展開戦略ガイド</h1>
+        <p class="subtitle">規約を理解して、賢くビジネスを拡大する</p>
+        <span class="badge">2025年版</span>
+    </header>
+
+    <div class="container">
+        <!-- 目次 -->
+        <div class="toc">
+            <h2>📑 目次</h2>
+            <ol>
+                <li><a href="#policy">eBayの外部誘導に関する規約</a></li>
+                <li><a href="#risk">誘導方法とリスクレベル</a></li>
+                <li><a href="#patterns">Shopify活用パターン</a></li>
+                <li><a href="#strategy">現実的な展開戦略</a></li>
+                <li><a href="#decision">判断フローチャート</a></li>
+            </ol>
+        </div>
+
+        <!-- 1. eBayの規約 -->
+        <div class="section" id="policy">
+            <h2>1. eBayの外部誘導に関する規約</h2>
+
+            <h3>eBay Links Policy（リンクポリシー）</h3>
+
+            <p>eBayは、プラットフォーム上での取引を守るため、外部サイトへの誘導を厳しく制限しています。</p>
+
+            <div class="danger-box">
+                <h4>❌ 明確に禁止されていること</h4>
+                <ul>
+                    <li>出品ページ内で<strong>外部サイトへのリンク</strong>を掲載する</li>
+                    <li>購入者を<strong>eBay外での取引に誘導</strong>する</li>
+                    <li>メッセージで<strong>外部プラットフォームでの購入を促す</strong></li>
+                    <li>連絡先情報を<strong>eBay外取引目的で共有</strong>する</li>
+                </ul>
+            </div>
+
+            <blockquote>
+                "Sellers may not post links that take buyers off eBay to purchase items, or include links that encourage buyers to complete transactions outside of eBay."
+                <cite>— eBay Links Policy</cite>
+            </blockquote>
+
+            <h3>違反した場合のペナルティ</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>段階</th>
+                        <th>ペナルティ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>初回警告</td>
+                        <td>出品の削除・修正要求</td>
+                    </tr>
+                    <tr>
+                        <td>繰り返し違反</td>
+                        <td>出品制限・一時停止</td>
+                    </tr>
+                    <tr>
+                        <td>悪質な場合</td>
+                        <td><strong>アカウント永久停止</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="warning-box">
+                <h4>⚠️ eBayは監視している</h4>
+                <p>eBayはAIを使ってメッセージや出品内容を監視しています。<br>
+                「Shopify」「自社サイト」「直接連絡」などのキーワードは検知される可能性があります。</p>
+            </div>
+
+            <h3>許可されているリンク</h3>
+            <ul>
+                <li>商品の説明に必要な<strong>メーカー公式サイト</strong>へのリンク</li>
+                <li><strong>配送追跡</strong>用のリンク</li>
+                <li>法的に必要な情報（<strong>返品ポリシー</strong>など）へのリンク</li>
+            </ul>
+
+            <div class="point-box">
+                <h4>📚 参考リンク</h4>
+                <p><a href="https://www.ebay.com/help/policies/listing-policies/links-policy?id=4251" target="_blank">eBay Links Policy（公式・英語）</a></p>
+            </div>
+        </div>
+
+        <!-- 2. 誘導方法とリスクレベル -->
+        <div class="section" id="risk">
+            <h2>2. 誘導方法とリスクレベル</h2>
+
+            <p>外部誘導の方法によって、リスクレベルが異なります。</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>方法</th>
+                        <th>リスク</th>
+                        <th>詳細</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>出品ページにShopifyリンク</td>
+                        <td><span class="risk-high">高</span></td>
+                        <td>即座に検知・削除される。繰り返しでアカウント停止</td>
+                    </tr>
+                    <tr>
+                        <td>メッセージで「うちのサイトで買って」</td>
+                        <td><span class="risk-high">高</span></td>
+                        <td>メッセージは監視対象。通報されるリスクも</td>
+                    </tr>
+                    <tr>
+                        <td>商品説明に「○○で検索」と記載</td>
+                        <td><span class="risk-mid">中</span></td>
+                        <td>直接リンクではないがグレー。削除される可能性</td>
+                    </tr>
+                    <tr>
+                        <td>梱包に名刺・ショップカード同封</td>
+                        <td><span class="risk-mid">中</span></td>
+                        <td>取引完了後なので比較的安全。多くのセラーが実施</td>
+                    </tr>
+                    <tr>
+                        <td>ブランド名を覚えてもらう</td>
+                        <td><span class="risk-low">低</span></td>
+                        <td>間接的。顧客が自ら検索する形</td>
+                    </tr>
+                    <tr>
+                        <td>優れた顧客体験を提供</td>
+                        <td><span class="risk-low">低</span></td>
+                        <td>リピーターがブランド名で検索してくれる</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>梱包同封について詳しく</h3>
+
+            <div class="warning-box">
+                <h4>⚠️ 梱包同封の注意点</h4>
+                <p>多くのセラーが行っている方法ですが、厳密にはグレーゾーンです。</p>
+                <ul>
+                    <li>購入者から<strong>通報される可能性</strong>はゼロではない</li>
+                    <li>「次回はこちらで」と<strong>積極的に誘導</strong>するのは避ける</li>
+                    <li>あくまで<strong>ブランド認知</strong>程度に留める</li>
+                </ul>
+            </div>
+
+            <div class="success-box">
+                <h4>✅ 比較的安全な同封内容</h4>
+                <ul>
+                    <li>ブランドロゴ入りの<strong>サンキューカード</strong></li>
+                    <li>ブランド名・ロゴのみの<strong>シンプルな名刺</strong></li>
+                    <li>「Thank you for your purchase!」程度のメッセージ</li>
+                </ul>
+                <p>※ 「Shopifyサイトはこちら！」「次回は直接どうぞ！」などは避ける</p>
+            </div>
+        </div>
+
+        <!-- 3. Shopify活用パターン -->
+        <div class="section" id="patterns">
+            <h2>3. Shopify活用パターン</h2>
+
+            <p>eBayとShopifyの関係性によって、いくつかのパターンが考えられます。</p>
+
+            <div class="pattern-card">
+                <h4>パターンA：eBayメイン + Shopify補助 <span class="tag">現状維持型</span></h4>
+
+                <div class="flow-diagram">
+                    <div class="flow-boxes">
+                        <div class="flow-box highlight">
+                            EAGLE
+                            <small>在庫管理</small>
+                        </div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-box highlight">
+                            eBay
+                            <small>メイン販売</small>
+                        </div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-box">
+                            Shopify
+                            <small>将来のため準備</small>
+                        </div>
+                    </div>
+                </div>
+
+                <p><strong>概要：</strong>eBayでの販売を中心に、Shopifyは将来の拡大に備えて準備しておく</p>
+
+                <table class="comparison-table">
+                    <tr>
+                        <td>メリット</td>
+                        <td>今の運用を変えなくていい。リスクゼロ</td>
+                    </tr>
+                    <tr>
+                        <td>デメリット</td>
+                        <td>Shopifyの月額費用がもったいない</td>
+                    </tr>
+                    <tr>
+                        <td>おすすめ度</td>
+                        <td>★★★☆☆</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="pattern-card recommended">
+                <h4>パターンB：eBay + ブランディング強化 <span class="tag best">おすすめ</span></h4>
+
+                <p><strong>概要：</strong>eBayで販売しながら、ブランド認知を高めて自然とShopifyに流入させる</p>
+
+                <h4 style="margin-top: 20px;">具体的な施策</h4>
+                <ul>
+                    <li><strong>ブランド名を統一</strong>：eBayストア名 = Shopify = SNS</li>
+                    <li><strong>梱包のクオリティ向上</strong>：ロゴ入りテープ、オリジナル箱など</li>
+                    <li><strong>SNS運営</strong>：Instagram、Pinterestでブランド発信</li>
+                    <li><strong>サンキューカード同封</strong>：ブランドロゴ入り（URLは書かない）</li>
+                </ul>
+
+                <table class="comparison-table">
+                    <tr>
+                        <td>メリット</td>
+                        <td>規約違反リスクなし。長期的にブランド資産が貯まる</td>
+                    </tr>
+                    <tr>
+                        <td>デメリット</td>
+                        <td>効果が出るまで時間がかかる</td>
+                    </tr>
+                    <tr>
+                        <td>おすすめ度</td>
+                        <td>★★★★★</td>
+                    </tr>
+                </table>
+
+                <div class="success-box">
+                    <h4>💡 なぜこれがベスト？</h4>
+                    <p>顧客が自らブランド名で検索 → Shopifyを発見 → 購入<br>
+                    この流れなら<strong>規約違反にならず</strong>、かつ<strong>ロイヤルカスタマー</strong>を獲得できます。</p>
+                </div>
+            </div>
+
+            <div class="pattern-card">
+                <h4>パターンC：Shopifyメイン + eBay集客 <span class="tag">上級者向け</span></h4>
+
+                <div class="flow-diagram">
+                    <div class="flow-boxes">
+                        <div class="flow-box">
+                            eBay
+                            <small>新規顧客獲得</small>
+                        </div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-box">
+                            ブランド認知
+                            <small>梱包・品質</small>
+                        </div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-box highlight">
+                            Shopify
+                            <small>リピート購入</small>
+                        </div>
+                    </div>
+                </div>
+
+                <p><strong>概要：</strong>eBayは新規顧客との出会いの場。リピーターはShopifyで</p>
+
+                <table class="comparison-table">
+                    <tr>
+                        <td>メリット</td>
+                        <td>eBay手数料を削減。顧客データを自社で持てる</td>
+                    </tr>
+                    <tr>
+                        <td>デメリット</td>
+                        <td>Shopifyへの集客力が必要。SEO・広告の知識が必要</td>
+                    </tr>
+                    <tr>
+                        <td>おすすめ度</td>
+                        <td>★★★★☆（ブランドが確立したら）</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="pattern-card">
+                <h4>パターンD：マルチプラットフォーム展開 <span class="tag">拡大型</span></h4>
+
+                <div class="flow-diagram">
+                    <div class="flow-boxes">
+                        <div class="flow-box">
+                            eBay
+                        </div>
+                        <div class="flow-box highlight">
+                            Shopify
+                            <small>中継地点</small>
+                        </div>
+                        <div class="flow-box">
+                            Joom
+                        </div>
+                    </div>
+                </div>
+
+                <p><strong>概要：</strong>Shopifyを商品データの中継地点として、複数プラットフォームに展開</p>
+
+                <table class="comparison-table">
+                    <tr>
+                        <td>メリット</td>
+                        <td>販路拡大。Joom等への出品が効率化</td>
+                    </tr>
+                    <tr>
+                        <td>デメリット</td>
+                        <td>在庫管理が複雑。タイムラグの問題</td>
+                    </tr>
+                    <tr>
+                        <td>おすすめ度</td>
+                        <td>★★★☆☆（Joomに本気なら）</td>
+                    </tr>
+                </table>
+
+                <p>※ 詳しくは <a href="eagle-joom-guide.html">EAGLE × eBay × Shopify × Joom 連携ガイド</a> 参照</p>
+            </div>
+        </div>
+
+        <!-- 4. 現実的な展開戦略 -->
+        <div class="section" id="strategy">
+            <h2>4. 現実的な展開戦略</h2>
+
+            <h3>短期（今すぐできること）</h3>
+            <ul class="checklist">
+                <li><strong>ブランド名を決める</strong>：覚えやすく、検索しやすい名前</li>
+                <li><strong>eBayストア名をブランド名に統一</strong></li>
+                <li><strong>サンキューカードを作成</strong>：ブランドロゴ入り</li>
+                <li><strong>梱包をブランディング</strong>：ロゴシール、オリジナルテープなど</li>
+            </ul>
+
+            <h3>中期（1〜3ヶ月）</h3>
+            <ul class="checklist">
+                <li><strong>SNSアカウント開設</strong>：Instagram、Pinterest</li>
+                <li><strong>Shopifyストアを整備</strong>：デザイン、商品登録</li>
+                <li><strong>Google検索対策</strong>：ブランド名で検索1位を目指す</li>
+            </ul>
+
+            <h3>長期（3ヶ月〜）</h3>
+            <ul class="checklist">
+                <li><strong>SNSでの発信強化</strong>：商品紹介、使用シーン</li>
+                <li><strong>メールリスト構築</strong>：Shopify購入者にニュースレター</li>
+                <li><strong>広告運用</strong>：Google広告、Facebook広告</li>
+                <li><strong>リピーター優遇</strong>：Shopify限定クーポン</li>
+            </ul>
+
+            <div class="point-box">
+                <h4>💡 ポイント</h4>
+                <p>「eBayから無理に誘導する」のではなく、<br>
+                「顧客が自然とあなたのブランドを探したくなる」状態を作ることが重要です。</p>
+            </div>
+
+            <h3>Shopify不要な場合</h3>
+            <p>以下に該当する場合、今はShopifyを急ぐ必要はありません：</p>
+            <ul>
+                <li>eBayでの売上が安定していて満足している</li>
+                <li>ブランディングよりも回転率を重視</li>
+                <li>単価が低く、リピート購入が見込めない商材</li>
+                <li>Joom等への展開予定がない</li>
+            </ul>
+
+            <div class="warning-box">
+                <h4>⚠️ Shopifyの月額費用</h4>
+                <p>ベーシックプランで約4,850円/月（年払いなら約3,650円/月）かかります。<br>
+                使わないなら、その費用を他のマーケティングに回した方が効果的かもしれません。</p>
+            </div>
+        </div>
+
+        <!-- 5. 判断フローチャート -->
+        <div class="section" id="decision">
+            <h2>5. 判断フローチャート</h2>
+
+            <h3>Shopifyを今すぐ活用すべき？</h3>
+
+            <div class="pattern-card">
+                <h4>Q1: Joomなど他プラットフォームへの展開を考えている？</h4>
+                <p>→ <strong>YES</strong>：Shopifyを中継地点として活用する価値あり<br>
+                → <strong>NO</strong>：Q2へ</p>
+            </div>
+
+            <div class="pattern-card">
+                <h4>Q2: ブランドを確立して、長期的にビジネスを育てたい？</h4>
+                <p>→ <strong>YES</strong>：Shopifyを整備し、ブランディング戦略を実行<br>
+                → <strong>NO</strong>：Q3へ</p>
+            </div>
+
+            <div class="pattern-card">
+                <h4>Q3: eBay以外からの集客手段（SNS、広告等）がある？</h4>
+                <p>→ <strong>YES</strong>：Shopifyで直接販売のチャンス<br>
+                → <strong>NO</strong>：今はShopify不要。eBay + EAGLEに集中</p>
+            </div>
+
+            <h3>あなたの状況での結論</h3>
+
+            <div class="success-box">
+                <h4>📝 現状の整理</h4>
+                <ul>
+                    <li>EAGLE + eBayでの運用は順調 ✓</li>
+                    <li>Shopify・Joomアカウントは既にある ✓</li>
+                    <li>Joomへの出品は煩雑で大変 → 自動化したい</li>
+                </ul>
+            </div>
+
+            <div class="point-box">
+                <h4>💡 おすすめの進め方</h4>
+                <ol>
+                    <li><strong>Joom展開を本気でやるなら</strong>：Shopify中継を試す価値あり</li>
+                    <li><strong>Joomは様子見なら</strong>：Shopifyは一旦保留でOK</li>
+                    <li><strong>ブランディングに興味があるなら</strong>：eBay運用しながらShopify整備</li>
+                </ol>
+            </div>
+
+            <h3>参考：eBayからの外部誘導なしでShopifyを活かす方法</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>集客方法</th>
+                        <th>難易度</th>
+                        <th>コスト</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Google検索（SEO）</td>
+                        <td>中〜高</td>
+                        <td>無料（時間はかかる）</td>
+                    </tr>
+                    <tr>
+                        <td>Instagram / Pinterest</td>
+                        <td>中</td>
+                        <td>無料（運用工数）</td>
+                    </tr>
+                    <tr>
+                        <td>Google広告</td>
+                        <td>中</td>
+                        <td>有料（予算次第）</td>
+                    </tr>
+                    <tr>
+                        <td>Facebook / Instagram広告</td>
+                        <td>中</td>
+                        <td>有料（予算次第）</td>
+                    </tr>
+                    <tr>
+                        <td>インフルエンサー活用</td>
+                        <td>低〜中</td>
+                        <td>有料（商品提供〜）</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- まとめ -->
+        <div class="section">
+            <h2>📌 まとめ</h2>
+
+            <div class="danger-box">
+                <h4>❌ やってはいけないこと</h4>
+                <ul>
+                    <li>eBay出品ページに外部リンクを貼る</li>
+                    <li>メッセージで「うちのサイトで買って」と誘導</li>
+                    <li>商品説明に露骨な誘導文を入れる</li>
+                </ul>
+            </div>
+
+            <div class="success-box">
+                <h4>✅ おすすめのアプローチ</h4>
+                <ul>
+                    <li>ブランド名を統一して認知度を高める</li>
+                    <li>梱包・商品クオリティで差別化</li>
+                    <li>SNSでブランドを発信</li>
+                    <li>顧客が自然と検索してくれる状態を作る</li>
+                </ul>
+            </div>
+
+            <p style="text-align: center; margin-top: 30px; font-size: 1.1em;">
+                <strong>「規約の範囲内で、賢くビジネスを拡大する」</strong>
+            </p>
+        </div>
+    </div>
+
+    <footer>
+        <p>作成日: 2025年12月</p>
+        <p>
+            参考:
+            <a href="https://www.ebay.com/help/policies/listing-policies/links-policy?id=4251" target="_blank">eBay Links Policy</a> |
+            <a href="index.html">Shopify完全ガイド</a> |
+            <a href="eagle-joom-guide.html">EAGLE×Joom連携ガイド</a>
+        </p>
+    </footer>
+</body>
+</html>
