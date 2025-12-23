@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EAGLE × eBay × Shopify × Joom 連携ガイド</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif;
+            line-height: 1.8;
+            color: #333;
+            background: #f5f5f5;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* ヘッダー */
+        header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: white;
+            padding: 50px 20px;
+            text-align: center;
+            border-radius: 0 0 30px 30px;
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            font-size: 2em;
+            margin-bottom: 15px;
+        }
+
+        header .subtitle {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        header .badge {
+            display: inline-block;
+            background: #e94560;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            margin-top: 15px;
+        }
+
+        /* 目次 */
+        .toc {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .toc h2 {
+            color: #1a1a2e;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .toc ol {
+            margin-left: 25px;
+        }
+
+        .toc li {
+            padding: 8px 0;
+        }
+
+        .toc a {
+            color: #0f3460;
+            text-decoration: none;
+        }
+
+        .toc a:hover {
+            text-decoration: underline;
+        }
+
+        /* セクション */
+        .section {
+            background: white;
+            padding: 35px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .section h2 {
+            color: #1a1a2e;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #e94560;
+        }
+
+        .section h3 {
+            color: #0f3460;
+            font-size: 1.2em;
+            margin: 25px 0 15px 0;
+        }
+
+        .section h4 {
+            color: #16213e;
+            font-size: 1.1em;
+            margin: 20px 0 10px 0;
+        }
+
+        /* フロー図 */
+        .flow-diagram {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 25px 0;
+            color: white;
+        }
+
+        .flow-diagram h3 {
+            color: white;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .flow-boxes {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .flow-box {
+            background: rgba(255,255,255,0.95);
+            color: #333;
+            padding: 15px 25px;
+            border-radius: 10px;
+            text-align: center;
+            min-width: 120px;
+            font-weight: bold;
+        }
+
+        .flow-box.highlight {
+            background: #e94560;
+            color: white;
+        }
+
+        .flow-box small {
+            display: block;
+            font-weight: normal;
+            font-size: 0.8em;
+            margin-top: 5px;
+            opacity: 0.8;
+        }
+
+        .flow-arrow {
+            font-size: 1.5em;
+            color: white;
+        }
+
+        /* ステップ */
+        .step {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 20px 0;
+            border-left: 5px solid #e94560;
+        }
+
+        .step-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .step-number {
+            background: #e94560;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .step-title {
+            color: #1a1a2e;
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+
+        /* コードブロック */
+        .code-block {
+            background: #1a1a2e;
+            color: #a5d6a7;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+
+        /* 画像プレースホルダー */
+        .image-placeholder {
+            background: linear-gradient(135deg, #e8e8e8 0%, #f5f5f5 100%);
+            border: 2px dashed #ccc;
+            border-radius: 10px;
+            padding: 40px 20px;
+            text-align: center;
+            margin: 20px 0;
+            color: #666;
+        }
+
+        .image-placeholder .icon {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+
+        /* 注意ボックス */
+        .warning-box {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #ff9800;
+            margin: 20px 0;
+        }
+
+        .warning-box h4 {
+            color: #e65100;
+            margin-bottom: 10px;
+        }
+
+        /* ポイントボックス */
+        .point-box {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #2196f3;
+            margin: 20px 0;
+        }
+
+        .point-box h4 {
+            color: #1565c0;
+            margin-bottom: 10px;
+        }
+
+        /* 成功ボックス */
+        .success-box {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #4caf50;
+            margin: 20px 0;
+        }
+
+        .success-box h4 {
+            color: #2e7d32;
+            margin-bottom: 10px;
+        }
+
+        /* テーブル */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th {
+            background: #1a1a2e;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+        }
+
+        tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        /* リンクボタン */
+        .link-button {
+            display: inline-block;
+            background: #e94560;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 25px;
+            text-decoration: none;
+            margin: 10px 5px 10px 0;
+            transition: all 0.3s;
+        }
+
+        .link-button:hover {
+            background: #c73e54;
+            transform: translateY(-2px);
+        }
+
+        .link-button.secondary {
+            background: #0f3460;
+        }
+
+        /* チェックリスト */
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+
+        .checklist li {
+            padding: 10px 0 10px 35px;
+            position: relative;
+            border-bottom: 1px solid #eee;
+        }
+
+        .checklist li::before {
+            content: "☐";
+            position: absolute;
+            left: 0;
+            font-size: 1.2em;
+            color: #e94560;
+        }
+
+        /* 料金表 */
+        .pricing-card {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            border: 2px solid #eee;
+        }
+
+        .pricing-card.recommended {
+            border-color: #e94560;
+            background: #fff5f7;
+        }
+
+        .pricing-card h4 {
+            margin-bottom: 10px;
+        }
+
+        .pricing-card .price {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #e94560;
+        }
+
+        /* FAQ */
+        .faq-item {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+
+        .faq-item h4 {
+            color: #e94560;
+            margin-bottom: 10px;
+        }
+
+        /* フッター */
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        footer a {
+            color: #0f3460;
+        }
+
+        /* レスポンシブ */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.5em;
+            }
+
+            .section {
+                padding: 20px;
+            }
+
+            .flow-boxes {
+                flex-direction: column;
+            }
+
+            .flow-arrow {
+                transform: rotate(90deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>EAGLE × eBay × Shopify × Joom<br>連携設定ガイド</h1>
+        <p class="subtitle">Joomへの煩雑な出品作業を自動化する方法</p>
+        <span class="badge">実践マニュアル</span>
+    </header>
+
+    <div class="container">
+        <!-- 目次 -->
+        <div class="toc">
+            <h2>📑 目次</h2>
+            <ol>
+                <li><a href="#overview">この連携で実現できること</a></li>
+                <li><a href="#flow">全体の流れ（フロー図）</a></li>
+                <li><a href="#preparation">事前準備・必要なもの</a></li>
+                <li><a href="#step1">Step 1: eBay → Shopify 連携設定</a></li>
+                <li><a href="#step2">Step 2: Shopify → Joom 連携設定</a></li>
+                <li><a href="#step3">Step 3: 動作確認・テスト</a></li>
+                <li><a href="#cost">費用まとめ</a></li>
+                <li><a href="#tips">運用のコツ・注意点</a></li>
+                <li><a href="#faq">よくある質問</a></li>
+            </ol>
+        </div>
+
+        <!-- 1. この連携で実現できること -->
+        <div class="section" id="overview">
+            <h2>1. この連携で実現できること</h2>
+
+            <h3>現状の課題</h3>
+            <ul>
+                <li>EAGLEでeBayの在庫管理はできている</li>
+                <li>Joomへの出品は手動で、煩雑で時間がかかる</li>
+                <li>同じ商品を複数回入力するのは非効率</li>
+            </ul>
+
+            <h3>この連携で解決！</h3>
+            <div class="success-box">
+                <h4>✅ 実現できること</h4>
+                <ul>
+                    <li><strong>Joomへの出品が自動化</strong> - 手動入力から解放</li>
+                    <li><strong>商品データの一元管理</strong> - Shopifyが中継地点に</li>
+                    <li><strong>在庫の連動</strong> - eBayで売れたらJoomの在庫も減る</li>
+                    <li><strong>EAGLEはそのまま使える</strong> - 今の運用を変えなくてOK</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 2. 全体の流れ -->
+        <div class="section" id="flow">
+            <h2>2. 全体の流れ（フロー図）</h2>
+
+            <div class="flow-diagram">
+                <h3>データの流れ</h3>
+                <div class="flow-boxes">
+                    <div class="flow-box">
+                        EAGLE
+                        <small>在庫管理</small>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-box">
+                        eBay
+                        <small>出品・販売</small>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-box highlight">
+                        Shopify
+                        <small>中継地点</small>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-box">
+                        Joom
+                        <small>自動出品</small>
+                    </div>
+                </div>
+            </div>
+
+            <h3>使用するツール・アプリ</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>連携区間</th>
+                        <th>使用ツール</th>
+                        <th>役割</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>EAGLE ↔ eBay</td>
+                        <td><strong>EAGLE</strong>（現状維持）</td>
+                        <td>在庫管理、価格管理</td>
+                    </tr>
+                    <tr>
+                        <td>eBay → Shopify</td>
+                        <td><strong>eBay Importer by Infoshore</strong></td>
+                        <td>eBay商品をShopifyにインポート</td>
+                    </tr>
+                    <tr>
+                        <td>Shopify → Joom</td>
+                        <td><strong>Mulwi Shopping Feeds</strong></td>
+                        <td>商品フィードをJoomに送信</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="point-box">
+                <h4>💡 ポイント</h4>
+                <p>Shopifyが「商品データベース」の役割を果たします。<br>
+                一度商品をShopifyに入れれば、そこからJoom以外にも展開可能になります。</p>
+            </div>
+        </div>
+
+        <!-- 3. 事前準備 -->
+        <div class="section" id="preparation">
+            <h2>3. 事前準備・必要なもの</h2>
+
+            <h3>必要なアカウント</h3>
+            <ul class="checklist">
+                <li>eBayセラーアカウント（EAGLE連携済み）</li>
+                <li>Shopifyアカウント ← <strong>お持ちとのこと ✓</strong></li>
+                <li>Joomセラーアカウント ← <strong>お持ちとのこと ✓</strong></li>
+            </ul>
+
+            <h3>Shopifyストアの状態確認</h3>
+            <ul class="checklist">
+                <li>Shopifyストアが「公開」状態になっている</li>
+                <li>決済サービスが設定されている（Shopify Payments等）</li>
+                <li>配送設定が完了している</li>
+            </ul>
+
+            <div class="warning-box">
+                <h4>⚠️ 注意</h4>
+                <p>Shopifyストアが非公開だと、アプリが正常に動作しない場合があります。<br>
+                「オンラインストア → テーマ → 公開」の状態になっているか確認してください。</p>
+            </div>
+
+            <h3>インストールするアプリ</h3>
+            <div class="pricing-card">
+                <h4>1. eBay Importer by Infoshore</h4>
+                <p>eBay → Shopify の商品インポート用</p>
+                <a href="https://apps.shopify.com/epi" target="_blank" class="link-button">Shopify App Storeで見る</a>
+            </div>
+
+            <div class="pricing-card">
+                <h4>2. Mulwi Shopping Feeds</h4>
+                <p>Shopify → Joom の商品フィード連携用</p>
+                <a href="https://apps.shopify.com/mulwi-shopping-feeds" target="_blank" class="link-button">Shopify App Storeで見る</a>
+            </div>
+        </div>
+
+        <!-- 4. Step 1: eBay → Shopify -->
+        <div class="section" id="step1">
+            <h2>4. Step 1: eBay → Shopify 連携設定</h2>
+
+            <p>まず、eBayの商品をShopifyにインポートします。</p>
+
+            <div class="step">
+                <div class="step-header">
+                    <div class="step-number">1</div>
+                    <div class="step-title">eBay Importer アプリをインストール</div>
+                </div>
+                <ol>
+                    <li>Shopify管理画面にログイン</li>
+                    <li>「アプリ」→「Shopify App Store」へ</li>
+                    <li>「eBay Importer Infoshore」で検索</li>
+                    <li>「アプリを追加」→「インストール」をクリック</li>
+                </ol>
+                <div class="image-placeholder">
+                    <div class="icon">📱</div>
+                    <p>Shopify App Store の画面</p>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-header">
+                    <div class="step-number">2</div>
+                    <div class="step-title">eBayアカウントを接続</div>
+                </div>
+                <ol>
+                    <li>アプリを開く → 「Connect eBay Account」をクリック</li>
+                    <li>eBayのログイン画面が表示される</li>
+                    <li>eBayにログインし、アクセスを許可</li>
+                    <li>Shopifyに戻り、接続完了を確認</li>
+                </ol>
+                <div class="point-box">
+                    <h4>💡 eBayアカウントの選択</h4>
+                    <p>複数のeBayアカウントがある場合、EAGLEで管理しているアカウントを選択してください。</p>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-header">
+                    <div class="step-number">3</div>
+                    <div class="step-title">eBay商品をインポート</div>
+                </div>
+                <ol>
+                    <li>左メニュー「Import」をクリック</li>
+                    <li>インポートしたい商品を選択（または全選択）</li>
+                    <li>「Import Selected」をクリック</li>
+                    <li>インポート完了まで待機（商品数により数分〜数十分）</li>
+                </ol>
+
+                <h4>インポート設定のオプション</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>オプション</th>
+                            <th>推奨設定</th>
+                            <th>説明</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Import Images</td>
+                            <td>✅ ON</td>
+                            <td>商品画像もインポート</td>
+                        </tr>
+                        <tr>
+                            <td>Import Variants</td>
+                            <td>✅ ON</td>
+                            <td>バリエーションもインポート</td>
+                        </tr>
+                        <tr>
+                            <td>Sync Inventory</td>
+                            <td>✅ ON</td>
+                            <td>在庫数を同期</td>
+                        </tr>
+                        <tr>
+                            <td>Auto-sync</td>
+                            <td>✅ ON</td>
+                            <td>定期的に自動同期</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="step">
+                <div class="step-header">
+                    <div class="step-number">4</div>
+                    <div class="step-title">インポート結果を確認</div>
+                </div>
+                <ol>
+                    <li>Shopify管理画面 →「商品管理」を開く</li>
+                    <li>eBayの商品がリストに表示されているか確認</li>
+                    <li>画像、価格、在庫数が正しいか確認</li>
+                </ol>
+            </div>
+
+            <div class="success-box">
+                <h4>✅ Step 1 完了チェック</h4>
+                <ul>
+                    <li>eBay Importerがインストールされている</li>
+                    <li>eBayアカウントが接続されている</li>
+                    <li>商品がShopifyにインポートされている</li>
+                    <li>自動同期が有効になっている</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 5. Step 2: Shopify → Joom -->
+        <div class="section" id="step2">
+            <h2>5. Step 2: Shopify → Joom 連携設定</h2>
+
+            <p>次に、Shopifyの商品をJoomに自動出品できるようにします。</p>
+
+            <div class="step">
+                <div class="step-header">
+                    <div class="step-number">1</div>
+                    <div class="step-title">Mulwi Shopping Feeds アプリをインストール</div>
+                </div>
+                <ol>
+                    <li>Shopify App Storeで「Mulwi Shopping Feeds」を検索</li>
+                    <li>「アプリを追加」→「インストール」をクリック</li>
+                    <li>インストール後、自動でストアデータのインデックス作成が開始</li>
+                    <li>完了メールが届くまで待機（通常数分〜数十分）</li>
+                </ol>
+                <div class="image-placeholder">
+                    <div class="icon">⚙️</div>
+                    <p>Mulwi インストール画面</p>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-header">
+                    <div class="step-number">2</div>
+                    <div class="step-title">Joom用のフィードを作成</div>
+                </div>
+                <ol>
+                    <li>Mulwiアプリを開く</li>
+                    <li>左メニュー「Feeds」をクリック</li>
+                    <li>「Add Feed」ボタンをクリック</li>
+                    <li>「Show all feeds」をクリック</li>
+                    <li>検索欄に「Joom」と入力</li>
+                    <li>「Joom」テンプレートを選択</li>
+                </ol>
+            </div>
+
+            <div class="step">
+                <div class="step-header">
+                    <div class="step-number">3</div>
+                    <div class="step-title">フィード設定をカスタマイズ</div>
+                </div>
+
+                <h4>基本設定</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>項目</th>
+                            <th>設定内容</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Feed Name</td>
+                            <td>「Joom Feed」など分かりやすい名前</td>
+                        </tr>
+                        <tr>
+                            <td>Language</td>
+                            <td>English（Joomは英語が基本）</td>
+                        </tr>
+                        <tr>
+                            <td>Currency</td>
+                            <td>USD または EUR</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>商品フィルター設定（重要）</h4>
+                <p>Joomに出品したくない商品がある場合はフィルターを設定：</p>
+                <ul>
+                    <li>「Product Filters」セクションを開く</li>
+                    <li>条件を設定（例：在庫0の商品は除外）</li>
+                    <li>特定のコレクションだけを対象にすることも可能</li>
+                </ul>
+
+                <h4>カテゴリマッピング</h4>
+                <p>Shopifyの商品カテゴリをJoomのカテゴリに紐づけます：</p>
+                <ul>
+                    <li>「Category Mapping」セクションを開く</li>
+                    <li>Shopifyのカテゴリ → Joomの対応カテゴリを選択</li>
+                </ul>
+            </div>
+
+            <div class="step">
+                <div class="step-header">
+                    <div class="step-number">4</div>
+                    <div class="step-title">フィードを保存・生成</div>
+                </div>
+                <ol>
+                    <li>設定が完了したら「Save」をクリック</li>
+                    <li>「Generate Feed」をクリックしてフィード生成</li>
+                    <li>「Quality Control」で問題がないか確認</li>
+                    <li>フィードURLが生成される</li>
+                </ol>
+
+                <div class="code-block">
+フィードURL例：
+https://your-store.myshopify.com/apps/mulwi/feeds/xxxxx.xml
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-header">
+                    <div class="step-number">5</div>
+                    <div class="step-title">JoomセラーセンターでフィードURLを登録</div>
+                </div>
+                <ol>
+                    <li><a href="https://merchant.joom.com/" target="_blank">Joom Merchant Center</a>にログイン</li>
+                    <li>「Products」または「商品管理」メニューへ</li>
+                    <li>「Import」または「インポート」を選択</li>
+                    <li>「Feed URL」オプションを選択</li>
+                    <li>MulwiのフィードURLを貼り付け</li>
+                    <li>インポート設定を確認し、実行</li>
+                </ol>
+
+                <div class="warning-box">
+                    <h4>⚠️ Joom側の設定について</h4>
+                    <p>Joomセラーセンターの画面は変更される可能性があります。<br>
+                    上記手順で見つからない場合は、Joomサポートに「Product Feed URLでの商品インポート方法」を問い合わせてください。</p>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-header">
+                    <div class="step-number">6</div>
+                    <div class="step-title">自動更新を設定</div>
+                </div>
+                <p>Mulwiのフィードは自動更新されるので、一度設定すれば：</p>
+                <ul>
+                    <li>Shopifyで商品が更新される → フィードも自動更新</li>
+                    <li>Joomが定期的にフィードを読み込み → 商品情報が更新</li>
+                </ul>
+
+                <div class="point-box">
+                    <h4>💡 更新頻度について</h4>
+                    <p>Mulwiのフィードは通常、Shopifyの商品変更から<strong>数分〜1時間以内</strong>に更新されます。<br>
+                    Joom側がフィードを読み込む頻度はJoomの設定によります（通常1日1〜数回）。</p>
+                </div>
+            </div>
+
+            <div class="success-box">
+                <h4>✅ Step 2 完了チェック</h4>
+                <ul>
+                    <li>Mulwiがインストールされている</li>
+                    <li>Joomフィードが作成されている</li>
+                    <li>フィードURLが生成されている</li>
+                    <li>JoomセラーセンターでフィードURLを登録した</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 6. Step 3: 動作確認 -->
+        <div class="section" id="step3">
+            <h2>6. Step 3: 動作確認・テスト</h2>
+
+            <h3>テスト手順</h3>
+
+            <div class="step">
+                <div class="step-header">
+                    <div class="step-number">1</div>
+                    <div class="step-title">eBay → Shopify 同期テスト</div>
+                </div>
+                <ol>
+                    <li>eBayで1つの商品の価格を少しだけ変更（例：$100 → $101）</li>
+                    <li>eBay Importerで「Sync Now」をクリック</li>
+                    <li>Shopifyの商品管理で価格が変わっているか確認</li>
+                    <li>確認後、価格を元に戻す</li>
+                </ol>
+            </div>
+
+            <div class="step">
+                <div class="step-header">
+                    <div class="step-number">2</div>
+                    <div class="step-title">Shopify → Joom 同期テスト</div>
+                </div>
+                <ol>
+                    <li>Mulwiでフィードを開く</li>
+                    <li>「Preview」または「Download」でフィード内容を確認</li>
+                    <li>商品が正しく含まれているか確認</li>
+                    <li>Joomで商品が表示されているか確認</li>
+                </ol>
+            </div>
+
+            <div class="step">
+                <div class="step-header">
+                    <div class="step-number">3</div>
+                    <div class="step-title">在庫連動テスト</div>
+                </div>
+                <ol>
+                    <li>EAGLEで1つの商品の在庫を変更（例：10個 → 9個）</li>
+                    <li>eBayで在庫が変わっているか確認</li>
+                    <li>Shopifyで在庫が変わっているか確認</li>
+                    <li>Joomで在庫が変わっているか確認</li>
+                    <li>各ステップでタイムラグがどれくらいか記録</li>
+                </ol>
+
+                <div class="warning-box">
+                    <h4>⚠️ タイムラグについて</h4>
+                    <p>EAGLE → eBay → Shopify → Joom の各段階で同期に時間がかかります。<br>
+                    <strong>合計で数時間〜半日程度</strong>のタイムラグが発生する可能性があります。<br>
+                    即座の在庫反映が必要な場合は、安全在庫を設定することをおすすめします。</p>
+                </div>
+            </div>
+
+            <h3>問題が発生した場合</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>症状</th>
+                        <th>原因の可能性</th>
+                        <th>対処法</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>eBay商品がShopifyに来ない</td>
+                        <td>eBay接続エラー</td>
+                        <td>eBayを再接続、アプリを再インストール</td>
+                    </tr>
+                    <tr>
+                        <td>Joomに商品が表示されない</td>
+                        <td>フィードエラー、カテゴリ不一致</td>
+                        <td>Mulwiの Quality Control を確認</td>
+                    </tr>
+                    <tr>
+                        <td>画像が表示されない</td>
+                        <td>画像URLの問題</td>
+                        <td>Shopifyの画像設定を確認</td>
+                    </tr>
+                    <tr>
+                        <td>在庫が同期されない</td>
+                        <td>同期設定がOFF</td>
+                        <td>各アプリの同期設定を確認</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 7. 費用まとめ -->
+        <div class="section" id="cost">
+            <h2>7. 費用まとめ</h2>
+
+            <h3>月額費用の目安</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>項目</th>
+                        <th>月額（税別）</th>
+                        <th>備考</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Shopify ベーシック</td>
+                        <td><strong>約4,850円</strong></td>
+                        <td>年払いなら約3,650円/月</td>
+                    </tr>
+                    <tr>
+                        <td>eBay Importer by Infoshore</td>
+                        <td><strong>無料〜$29.99</strong></td>
+                        <td>無料版は5商品まで</td>
+                    </tr>
+                    <tr>
+                        <td>Mulwi Shopping Feeds</td>
+                        <td><strong>無料〜$29</strong></td>
+                        <td>無料版あり、商品数で変動</td>
+                    </tr>
+                    <tr style="background: #e8f5e9;">
+                        <td><strong>合計（最小構成）</strong></td>
+                        <td><strong>約5,000円〜</strong></td>
+                        <td>無料アプリを活用した場合</td>
+                    </tr>
+                    <tr style="background: #fff3e0;">
+                        <td><strong>合計（有料プラン）</strong></td>
+                        <td><strong>約10,000〜15,000円</strong></td>
+                        <td>商品数が多い場合</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="point-box">
+                <h4>💡 コスト削減のポイント</h4>
+                <ul>
+                    <li>まずは<strong>無料プラン・無料トライアル</strong>で動作確認</li>
+                    <li>問題なければ有料プランにアップグレード</li>
+                    <li>Shopifyは年払いで約25%お得</li>
+                </ul>
+            </div>
+
+            <h3>Joom手数料（参考）</h3>
+            <ul>
+                <li>登録・出品：<strong>無料</strong></li>
+                <li>販売手数料：<strong>5〜15%</strong>（カテゴリによる）</li>
+            </ul>
+        </div>
+
+        <!-- 8. 運用のコツ -->
+        <div class="section" id="tips">
+            <h2>8. 運用のコツ・注意点</h2>
+
+            <h3>在庫管理のポイント</h3>
+            <div class="warning-box">
+                <h4>⚠️ 売り違いを防ぐために</h4>
+                <p>複数プラットフォーム間での在庫連携には<strong>タイムラグ</strong>が発生します。<br>
+                以下の対策をおすすめします：</p>
+                <ul>
+                    <li><strong>安全在庫を設定</strong>：実在庫より少なめに登録（例：10個あるなら8個で登録）</li>
+                    <li><strong>売れ筋商品は注意</strong>：回転が速い商品は在庫に余裕を持たせる</li>
+                    <li><strong>定期的に手動確認</strong>：週1回は各プラットフォームの在庫を目視確認</li>
+                </ul>
+            </div>
+
+            <h3>価格設定のポイント</h3>
+            <ul>
+                <li>Joomの手数料（5〜15%）を考慮した価格設定</li>
+                <li>eBay Importerの「Price Markup」機能を活用</li>
+                <li>為替変動も考慮（円安/円高）</li>
+            </ul>
+
+            <h3>商品データの最適化</h3>
+            <ul>
+                <li><strong>タイトル</strong>：Joomのユーザー（主にヨーロッパ）に分かりやすい英語で</li>
+                <li><strong>画像</strong>：高解像度で複数枚用意</li>
+                <li><strong>説明文</strong>：簡潔で要点を押さえた内容に</li>
+            </ul>
+
+            <h3>トラブル時の連絡先</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>サービス</th>
+                        <th>サポート</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Shopify</td>
+                        <td>24時間チャットサポート（管理画面から）</td>
+                    </tr>
+                    <tr>
+                        <td>eBay Importer</td>
+                        <td>アプリ内サポート、support@infoshore.biz</td>
+                    </tr>
+                    <tr>
+                        <td>Mulwi</td>
+                        <td>support@mulwi.com（無料で設定サポートあり）</td>
+                    </tr>
+                    <tr>
+                        <td>Joom</td>
+                        <td>日本語サポートあり（東京支社）</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 9. FAQ -->
+        <div class="section" id="faq">
+            <h2>9. よくある質問</h2>
+
+            <div class="faq-item">
+                <h4>Q: EAGLEの設定は変更する必要がありますか？</h4>
+                <p>A: いいえ、EAGLEは今まで通りeBayとの連携に使います。変更は不要です。</p>
+            </div>
+
+            <div class="faq-item">
+                <h4>Q: 全商品をJoomに出品しないといけませんか？</h4>
+                <p>A: いいえ、Mulwiのフィルター機能で、特定の商品だけをJoomに出品できます。<br>
+                コレクションやタグで管理すると便利です。</p>
+            </div>
+
+            <div class="faq-item">
+                <h4>Q: eBayで商品が売れた場合、Joomの在庫も減りますか？</h4>
+                <p>A: はい、eBay → Shopify → Joom の順で在庫が同期されます。<br>
+                ただし、反映までタイムラグがあります（数時間〜半日程度）。</p>
+            </div>
+
+            <div class="faq-item">
+                <h4>Q: Joomの配送はどうなりますか？</h4>
+                <p>A: 配送は別途設定が必要です。Joom Logisticsは2024年に日本からのサービスを中止した情報があるため、<br>
+                他の国際配送サービス（DHL、FedEx、日本郵便EMS等）を検討してください。</p>
+            </div>
+
+            <div class="faq-item">
+                <h4>Q: 無料で試せますか？</h4>
+                <p>A: Shopifyは3日間無料トライアル、各アプリも無料プランや無料トライアルがあります。<br>
+                まずは小規模でテストしてから本格運用することをおすすめします。</p>
+            </div>
+
+            <div class="faq-item">
+                <h4>Q: Mulwiの設定が難しい場合は？</h4>
+                <p>A: Mulwiチームが<strong>無料で設定サポート</strong>してくれます。<br>
+                support@mulwi.com に連絡すると、フィードの構築・設定を手伝ってもらえます。</p>
+            </div>
+        </div>
+
+        <!-- 次のアクション -->
+        <div class="section">
+            <h2>🚀 さっそく始めましょう！</h2>
+
+            <h3>推奨する進め方</h3>
+            <ol>
+                <li><strong>Step 1</strong>：eBay Importerをインストールして、まず数商品だけインポートテスト</li>
+                <li><strong>Step 2</strong>：うまくいったら、Mulwiをインストールしてフィード作成</li>
+                <li><strong>Step 3</strong>：Joomで商品が表示されるか確認</li>
+                <li><strong>Step 4</strong>：問題なければ、全商品をインポート</li>
+            </ol>
+
+            <div class="success-box">
+                <h4>✅ 実行可能性チェックリスト</h4>
+                <p>以下がすべてYESなら、この連携は実現可能です：</p>
+                <ul class="checklist">
+                    <li>Shopifyアカウントがある → ✓</li>
+                    <li>Joomセラーアカウントがある → ✓</li>
+                    <li>eBayでEAGLE連携済み → ✓</li>
+                    <li>月額5,000〜15,000円程度の予算がある</li>
+                    <li>在庫のタイムラグ（数時間）を許容できる</li>
+                </ul>
+            </div>
+
+            <p style="text-align: center; margin-top: 30px;">
+                <a href="https://apps.shopify.com/epi" target="_blank" class="link-button">eBay Importerを見る</a>
+                <a href="https://apps.shopify.com/mulwi-shopping-feeds" target="_blank" class="link-button secondary">Mulwiを見る</a>
+            </p>
+        </div>
+    </div>
+
+    <footer>
+        <p>作成日: 2025年12月</p>
+        <p>
+            参考:
+            <a href="https://apps.shopify.com/epi" target="_blank">eBay Importer</a> |
+            <a href="https://mulwi.com/joom-feed/" target="_blank">Mulwi Joom Feed</a> |
+            <a href="https://merchant.joom.com/" target="_blank">Joom Merchant Center</a>
+        </p>
+    </footer>
+</body>
+</html>
